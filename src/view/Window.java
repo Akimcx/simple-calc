@@ -1,61 +1,56 @@
 package view;
 
+import controller.Controller;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
-class Button extends JButton {
-    Button(String text){
-        super(text);
-    }
-}
-
 public class Window {
 
-    static Pattern quotingPriorOp = Pattern.compile("\\d+(\\.\\d+)?[*\\/]\\d+(\\.\\d+)?");
+    static Pattern quotingPriorOp = Pattern.compile("\\d+(\\.\\d+)?[*/]\\d+(\\.\\d+)?");
     static Pattern pattern = Pattern.compile("\\d+(\\.\\d+)?[+-]\\d+(\\.\\d+)?");
+    static private Controller controller = new Controller();
 
-    public static void main ( String[] args ) {
+    public static void main(String[] args) {
         JFrame window = new JFrame("Calculator");
-        window.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-        window.setSize( 300,550 );
-        window.setResizable( false );
-        window.setLocationRelativeTo( null );
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setSize(300, 550);
+        window.setResizable(false);
+        window.setLocationRelativeTo(null);
         JPanel panel = new JPanel(new GridBagLayout());
 
         // Text Area
-        JTextArea topTextArea = new JTextArea(1,2);
-        topTextArea.setEnabled( false );
-        JTextArea bottomTextArea = new JTextArea(1,2);
+        JTextArea topTextArea = new JTextArea(1, 2);
+        topTextArea.setEnabled(false);
+        JTextArea bottomTextArea = new JTextArea(1, 2);
 
         // Buttons
-        JButton zero = new JButton( "0" );
-        JButton one = new JButton( "1" );
-        JButton two = new JButton( "2" );
-        JButton three = new JButton( "3" );
-        JButton four = new JButton( "4" );
-        JButton five = new JButton( "5" );
+        JButton zero = new JButton("0");
+        JButton one = new JButton("1");
+        JButton two = new JButton("2");
+        JButton three = new JButton("3");
+        JButton four = new JButton("4");
+        JButton five = new JButton("5");
 //        Button six = new Button( "6" );
-        JButton six = new JButton( "6" );
-        JButton seven = new JButton( "7" );
-        JButton height = new JButton( "8" );
-        JButton nine = new JButton( "9" );
-        JButton point = new JButton( "." );
-        JButton sign = new JButton( "+/-" );
-        JButton plus = new JButton( "+" );
-        JButton minus = new JButton( "-" );
-        JButton multiply = new JButton( "*" );
-        JButton divide = new JButton( "/" );
-        JButton equal = new JButton( "=" );
-        JButton eraseAll = new JButton( "CE" );
-        JButton eraseLine = new JButton( "C" );
-        JButton eraseChar = new JButton( "BA" );
+        JButton six = new JButton("6");
+        JButton seven = new JButton("7");
+        JButton height = new JButton("8");
+        JButton nine = new JButton("9");
+        JButton point = new JButton(".");
+        JButton sign = new JButton("+/-");
+        JButton plus = new JButton("+");
+        JButton minus = new JButton("-");
+        JButton multiply = new JButton("*");
+        JButton divide = new JButton("/");
+        JButton equal = new JButton("=");
+        JButton eraseAll = new JButton("CE");
+        JButton eraseLine = new JButton("C");
+        JButton eraseChar = new JButton("BA");
 
         one.setFocusable(false);
         two.setFocusable(false);
@@ -84,179 +79,180 @@ public class Window {
         constraints.gridy = 0;
         constraints.gridwidth = 4;
         constraints.fill = GridBagConstraints.HORIZONTAL;
-        panel.add( topTextArea, constraints );
+        panel.add(topTextArea, constraints);
 
         constraints.gridx = 0;
         constraints.gridy = 1;
-        panel.add( bottomTextArea, constraints );
+        panel.add(bottomTextArea, constraints);
 
         constraints.gridx = 0;
         constraints.gridy = 2;
         constraints.gridwidth = 1;
-        panel.add( eraseAll, constraints );
+        panel.add(eraseAll, constraints);
 
         constraints.gridx = 1;
-        panel.add( eraseLine, constraints );
+        panel.add(eraseLine, constraints);
 
         constraints.gridx = 2;
-        panel.add( eraseChar, constraints );
+        panel.add(eraseChar, constraints);
 
         constraints.gridx = 3;
-        panel.add( divide, constraints );
+        panel.add(divide, constraints);
 
         constraints.gridx = 0;
         constraints.gridy = 3;
-        panel.add( seven, constraints );
+        panel.add(seven, constraints);
 
         constraints.gridx = 1;
-        panel.add( height, constraints );
+        panel.add(height, constraints);
 
         constraints.gridx = 2;
-        panel.add( nine, constraints );
+        panel.add(nine, constraints);
 
         constraints.gridx = 3;
-        panel.add( multiply, constraints );
+        panel.add(multiply, constraints);
 
         constraints.gridx = 0;
         constraints.gridy = 4;
-        panel.add( four, constraints );
+        panel.add(four, constraints);
 
         constraints.gridx = 1;
-        panel.add( five, constraints );
+        panel.add(five, constraints);
 
         constraints.gridx = 2;
-        panel.add( six, constraints );
+        panel.add(six, constraints);
 
         constraints.gridx = 3;
-        panel.add( minus, constraints );
+        panel.add(minus, constraints);
 
         constraints.gridx = 0;
         constraints.gridy = 5;
-        panel.add( one, constraints );
+        panel.add(one, constraints);
 
         constraints.gridx = 1;
-        panel.add( two, constraints );
+        panel.add(two, constraints);
 
         constraints.gridx = 2;
-        panel.add( three, constraints );
+        panel.add(three, constraints);
 
         constraints.gridx = 3;
-        panel.add( plus, constraints );
+        panel.add(plus, constraints);
 
         constraints.gridx = 1;
         constraints.gridy = 6;
-        panel.add( zero, constraints );
+        panel.add(zero, constraints);
 
         constraints.gridx = 0;
-        panel.add( sign, constraints );
+        panel.add(sign, constraints);
 
         constraints.gridx = 2;
-        panel.add( point, constraints );
+        panel.add(point, constraints);
 
         constraints.gridx = 3;
-        panel.add( equal, constraints );
+        panel.add(equal, constraints);
 
-        window.getContentPane().add( panel );
-        window.setVisible( true );
+        window.getContentPane().add(panel);
+        window.setVisible(true);
 
-        eraseAll.addActionListener( actionEvent -> {
-                eraseLine.doClick();
-                if ( topTextArea.getText().length() != 0 ) topTextArea.setText( "" );
-                equal.doClick();
+        eraseAll.addActionListener(actionEvent -> {
+            eraseLine.doClick();
+            if (topTextArea.getText().length() != 0) topTextArea.setText("");
+            equal.doClick();
         });
 
-        eraseLine.addActionListener( actionEvent -> {
-                if (bottomTextArea.getText().length() != 0) bottomTextArea.setText("");
-                equal.doClick();
+        eraseLine.addActionListener(actionEvent -> {
+            if (bottomTextArea.getText().length() != 0) bottomTextArea.setText("");
+            equal.doClick();
         });
 
-        eraseChar.addActionListener( actionEvent -> {
-                if ( bottomTextArea.getText().length() == 0 ) return;
-                String line = bottomTextArea.getText();
-                int endIndex = line.length() - 1;
-                bottomTextArea.setText(line.substring( 0, endIndex));
-                equal.doClick();
-        } );
+        eraseChar.addActionListener(actionEvent -> {
+            if (bottomTextArea.getText().length() == 0) return;
+            String line = bottomTextArea.getText();
+            int endIndex = line.length() - 1;
+            bottomTextArea.setText(line.substring(0, endIndex));
+            equal.doClick();
+        });
 
-        one.addActionListener( actionEvent -> {
+        one.addActionListener(actionEvent -> {
+//            controller.handleClick(one.getText());
             textAreaAppendText(bottomTextArea, one.getText());
             equal.doClick();
         });
 
-        two.addActionListener( actionEvent -> {
-            textAreaAppendText( bottomTextArea, two.getText());
+        two.addActionListener(actionEvent -> {
+            textAreaAppendText(bottomTextArea, two.getText());
             equal.doClick();
         });
 
-        three.addActionListener( actionEvent -> {
-            textAreaAppendText( bottomTextArea, three.getText());
+        three.addActionListener(actionEvent -> {
+            textAreaAppendText(bottomTextArea, three.getText());
             equal.doClick();
         });
 
-        four.addActionListener( actionEvent -> {
-            textAreaAppendText( bottomTextArea, four.getText());
+        four.addActionListener(actionEvent -> {
+            textAreaAppendText(bottomTextArea, four.getText());
             equal.doClick();
         });
 
-        five.addActionListener( actionEvent -> {
-            textAreaAppendText( bottomTextArea, five.getText());
+        five.addActionListener(actionEvent -> {
+            textAreaAppendText(bottomTextArea, five.getText());
             equal.doClick();
         });
 
-        six.addActionListener( actionEvent -> {
-            textAreaAppendText( bottomTextArea, six.getText());
+        six.addActionListener(actionEvent -> {
+            textAreaAppendText(bottomTextArea, six.getText());
             equal.doClick();
         });
 
-        seven.addActionListener( actionEvent -> {
-            textAreaAppendText( bottomTextArea, seven.getText());
+        seven.addActionListener(actionEvent -> {
+            textAreaAppendText(bottomTextArea, seven.getText());
             equal.doClick();
         });
 
-        height.addActionListener( actionEvent -> {
-            textAreaAppendText( bottomTextArea, height.getText());
+        height.addActionListener(actionEvent -> {
+            textAreaAppendText(bottomTextArea, height.getText());
             equal.doClick();
         });
 
-        nine.addActionListener( actionEvent -> {
-            textAreaAppendText( bottomTextArea, nine.getText());
+        nine.addActionListener(actionEvent -> {
+            textAreaAppendText(bottomTextArea, nine.getText());
             equal.doClick();
         });
 
-        zero.addActionListener( actionEvent -> {
+        zero.addActionListener(actionEvent -> {
             textAreaAppendText(bottomTextArea, zero.getText());
             equal.doClick();
         });
 
-        equal.addActionListener( actionEvent -> doOperation(bottomTextArea.getText(), topTextArea));
+        equal.addActionListener(actionEvent -> doOperation(bottomTextArea.getText(), topTextArea));
 
-        point.addActionListener( actionEvent -> {
-                if (bottomTextArea.getText().contains(point.getText())) return;
+        point.addActionListener(actionEvent -> {
+            if (bottomTextArea.getText().contains(point.getText())) return;
 
-                if (bottomTextArea.getText().length() == 0){
-                    bottomTextArea.setText( zero.getText() + point.getText() );
-                } else {
-                    bottomTextArea.setText( bottomTextArea.getText() + point.getText() );
-                }
-                equal.doClick();
-        } );
+            if (bottomTextArea.getText().length() == 0) {
+                bottomTextArea.setText(zero.getText() + point.getText());
+            } else {
+                bottomTextArea.setText(bottomTextArea.getText() + point.getText());
+            }
+            equal.doClick();
+        });
 
-        plus.addActionListener( actionEvent -> {
+        plus.addActionListener(actionEvent -> {
             handleOperation(bottomTextArea, plus);
             equal.doClick();
         });
 
-        minus.addActionListener( actionEvent -> {
+        minus.addActionListener(actionEvent -> {
             handleOperation(bottomTextArea, minus);
             equal.doClick();
         });
 
-        multiply.addActionListener( actionEvent -> {
+        multiply.addActionListener(actionEvent -> {
             handleOperation(bottomTextArea, multiply);
             equal.doClick();
         });
 
-        divide.addActionListener( actionEvent -> {
+        divide.addActionListener(actionEvent -> {
             handleOperation(bottomTextArea, divide);
             equal.doClick();
         });
@@ -264,10 +260,11 @@ public class Window {
         bottomTextArea.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent keyEvent) {
+
                 char keyChar = keyEvent.getKeyChar();
                 if (!isCharValid(keyEvent)) keyEvent.consume();
                 switch (keyChar) {
-                    case '\n' , '=' -> {
+                    case '\n', '=' -> {
                         keyEvent.consume();
                         equal.doClick();
                     }
@@ -298,6 +295,7 @@ public class Window {
             public void keyReleased(KeyEvent keyEvent) {
             }
         });
+
     }
 
     public static void doOperation(String string, JTextArea textArea) {
@@ -310,20 +308,16 @@ public class Window {
 
     }
 
-    static String res = "";
     private static String parse(String string) {
         Matcher matcher = quotingPriorOp.matcher(string);
 
+        String res = "";
         while (matcher.find()) {
             res = matcher.replaceFirst(doMath(matcher.group()));
             matcher.reset(res);
         }
-        System.out.println(res);
-
         Matcher matcher1 = pattern.matcher(res);
-
         while (matcher1.find()) {
-            System.out.println("m1"+matcher1.group());
             res = matcher1.replaceFirst(doMath(matcher1.group()));
             matcher1.reset(res);
         }
@@ -331,15 +325,15 @@ public class Window {
     }
 
     private static boolean includeAny(String string, String symbols) {
-        for (int i = 0, len = symbols.length(); i < len; i++){
+        for (int i = 0, len = symbols.length(); i < len; i++) {
             if (string.contains(Character.toString(symbols.charAt(i)))) return true;
         }
         return false;
     }
 
-    public static String doMath(String math){
+    public static String doMath(String math) {
         if (math.length() == 0) return "";
-        
+
         String p = math.replaceAll(" ", "");
 
         String[] parts = p.split("[+*/-]");
@@ -348,24 +342,20 @@ public class Window {
 
         double num1 = Double.parseDouble(parts[0]);
         double num2 = Double.parseDouble(parts[1]);
-        double res = 0;
         char operation = p.charAt(parts[0].length());
 
-        switch (operation) {
-            case '+' -> res = num1 + num2;
-            case '-' -> res = num1 - num2;
-            case '*' -> res = num1 * num2;
+        return Double.toString(switch (operation) {
+            case '+' -> num1 + num2;
+            case '-' -> num1 - num2;
+            case '*' -> num1 * num2;
             case '/' -> {
-                if (num2 == 0) return "0";
-                res = num1 / num2;
+                if (num2 == 0)
+                    throw new ArithmeticException("Division by zero");
+                else
+                    yield num1 / num2;
             }
-        }
-
-        return Double.toString(res);
-    }
-
-    private static String join(String[] strings, int index) {
-        return Arrays.stream(strings).reduce("", String::concat).substring(index);
+            default -> throw new IllegalStateException("Unexpected value: " + operation);
+        });
     }
 
     private static boolean isCharValid(KeyEvent keyEvent) {
@@ -376,34 +366,61 @@ public class Window {
 
     /**
      * Handle the change to be done when we click on an operation sign
+     *
      * @param textArea Text Area that contains the operation string
-     * @param jButton The actual button that was pressed
+     * @param jButton  The actual button that was pressed
      */
     private static void handleOperation(JTextArea textArea, JButton jButton) {
-        if (textArea.getText().length() == 0) return;
-        String lastChar = getLastChar(textArea.getText());
+        String areaText = textArea.getText();
+        if (areaText.length() == 0) return;
 
-        if ("+-/*".contains(lastChar)) {
-            String text = textArea.getText();
-            int endIndex = text.length() - 1;
-            textArea.setText(text.substring(0, endIndex) + jButton.getText());
+        int caretPos = textArea.getCaretPosition();
+        String buttonText = jButton.getText();
+
+        if (caretPos == 0) {
+            textArea.insert(buttonText, caretPos);
+            return;
         }
 
-        textArea.setText(textArea.getText() + jButton.getText());
+        String lastChar = "", prevChar = "";
+        if (caretPos == areaText.length()) {
+            lastChar = getLastChar(areaText);
+        } else {
+            lastChar = Character.toString(areaText.charAt(caretPos));
+            prevChar = Character.toString(areaText.charAt(caretPos - 1));
+        }
+
+        if("+-/*".contains(prevChar) && ! prevChar.isEmpty()) {
+            textArea.select(caretPos - 1,caretPos);
+            textArea.replaceSelection(buttonText);
+            return;
+        }
+        if ("+-/*".contains(lastChar) && ! lastChar.isEmpty()) {
+            textArea.select(caretPos,caretPos+1);
+            textArea.replaceSelection(buttonText);
+            return;
+        }
+
+        if (caretPos == areaText.length()) {
+            textArea.setText(areaText + buttonText);
+        } else {
+            textArea.insert(buttonText, caretPos);
+        }
     }
 
     /**
      * Retrieve the last character of a string or an empty string
+     *
      * @param string The string to parse
      * @return A single character
      */
     public static String getLastChar(String string) {
-        if ( string.length() == 0 ) return "";
+        if (string.length() == 0) return "";
         int endIndex = string.length() - 1;
-        return string.charAt( endIndex ) + "";
+        return Character.toString(string.charAt(endIndex));
     }
 
     public static void textAreaAppendText(JTextArea textArea, String text) {
-        textArea.setText( textArea.getText() + text );
+        textArea.setText(textArea.getText() + text);
     }
 }
