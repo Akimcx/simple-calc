@@ -60,28 +60,6 @@ public class Window {
         Button eraseLine = new Button("C");
         Button eraseChar = new Button("BA");
 
-//        one.setFocusable(false);
-//        two.setFocusable(false);
-//        three.setFocusable(false);
-//        four.setFocusable(false);
-//        five.setFocusable(false);
-//        six.setFocusable(false);
-//        seven.setFocusable(false);
-//        height.setFocusable(false);
-//        nine.setFocusable(false);
-//        zero.setFocusable(false);
-//
-//        plus.setFocusable(false);
-//        minus.setFocusable(false);
-//        divide.setFocusable(false);
-//        multiply.setFocusable(false);
-//        sign.setFocusable(false);
-//        point.setFocusable(false);
-//        equal.setFocusable(false);
-//        eraseAll.setFocusable(false);
-//        eraseLine.setFocusable(false);
-//        eraseChar.setFocusable(false);
-
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = 0;
         constraints.gridy = 0;
