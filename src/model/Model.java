@@ -1,11 +1,9 @@
 package model;
 
-import javax.swing.*;
-
 public class Model {
 
     public String parseString(String string) {
-       return "";
+       return string;
     }
 
     private void manageTextArea() {

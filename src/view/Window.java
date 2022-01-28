@@ -1,20 +1,28 @@
 package view;
 
-import controller.Controller;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+class Button extends JButton{
+
+    String text;
+
+    Button(String text) {
+        super(text);
+        this.text = text;
+        this.setFocusable(false);
+    }
+}
+
 public class Window {
 
     static Pattern quotingPriorOp = Pattern.compile("\\d+(\\.\\d+)?[*/]\\d+(\\.\\d+)?");
     static Pattern pattern = Pattern.compile("\\d+(\\.\\d+)?[+-]\\d+(\\.\\d+)?");
-    static private Controller controller = new Controller();
 
     public static void main(String[] args) {
         JFrame window = new JFrame("Calculator");
@@ -27,52 +35,52 @@ public class Window {
         // Text Area
         JTextArea topTextArea = new JTextArea(1, 2);
         topTextArea.setEnabled(false);
+        topTextArea.setDisabledTextColor(Color.gray);
         JTextArea bottomTextArea = new JTextArea(1, 2);
 
         // Buttons
-        JButton zero = new JButton("0");
-        JButton one = new JButton("1");
-        JButton two = new JButton("2");
-        JButton three = new JButton("3");
-        JButton four = new JButton("4");
-        JButton five = new JButton("5");
-//        Button six = new Button( "6" );
-        JButton six = new JButton("6");
-        JButton seven = new JButton("7");
-        JButton height = new JButton("8");
-        JButton nine = new JButton("9");
-        JButton point = new JButton(".");
-        JButton sign = new JButton("+/-");
-        JButton plus = new JButton("+");
-        JButton minus = new JButton("-");
-        JButton multiply = new JButton("*");
-        JButton divide = new JButton("/");
-        JButton equal = new JButton("=");
-        JButton eraseAll = new JButton("CE");
-        JButton eraseLine = new JButton("C");
-        JButton eraseChar = new JButton("BA");
+        Button zero = new Button("0");
+        Button one = new Button("1");
+        Button two = new Button("2");
+        Button three = new Button("3");
+        Button four = new Button("4");
+        Button five = new Button("5");
+        Button six = new Button("6");
+        Button seven = new Button("7");
+        Button height = new Button("8");
+        Button nine = new Button("9");
+        Button point = new Button(".");
+        Button sign = new Button("+/-");
+        Button plus = new Button("+");
+        Button minus = new Button("-");
+        Button multiply = new Button("*");
+        Button divide = new Button("/");
+        Button equal = new Button("=");
+        Button eraseAll = new Button("CE");
+        Button eraseLine = new Button("C");
+        Button eraseChar = new Button("BA");
 
-        one.setFocusable(false);
-        two.setFocusable(false);
-        three.setFocusable(false);
-        four.setFocusable(false);
-        five.setFocusable(false);
-        six.setFocusable(false);
-        seven.setFocusable(false);
-        height.setFocusable(false);
-        nine.setFocusable(false);
-        zero.setFocusable(false);
-
-        plus.setFocusable(false);
-        minus.setFocusable(false);
-        divide.setFocusable(false);
-        multiply.setFocusable(false);
-        sign.setFocusable(false);
-        point.setFocusable(false);
-        equal.setFocusable(false);
-        eraseAll.setFocusable(false);
-        eraseLine.setFocusable(false);
-        eraseChar.setFocusable(false);
+//        one.setFocusable(false);
+//        two.setFocusable(false);
+//        three.setFocusable(false);
+//        four.setFocusable(false);
+//        five.setFocusable(false);
+//        six.setFocusable(false);
+//        seven.setFocusable(false);
+//        height.setFocusable(false);
+//        nine.setFocusable(false);
+//        zero.setFocusable(false);
+//
+//        plus.setFocusable(false);
+//        minus.setFocusable(false);
+//        divide.setFocusable(false);
+//        multiply.setFocusable(false);
+//        sign.setFocusable(false);
+//        point.setFocusable(false);
+//        equal.setFocusable(false);
+//        eraseAll.setFocusable(false);
+//        eraseLine.setFocusable(false);
+//        eraseChar.setFocusable(false);
 
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = 0;
@@ -293,6 +301,7 @@ public class Window {
 
             @Override
             public void keyReleased(KeyEvent keyEvent) {
+                equal.doClick();
             }
         });
 
@@ -304,24 +313,24 @@ public class Window {
 
         if (symbols.contains(getLastChar(string))) return;
 
+//        textArea.setText(new DecimalFormat("0.#").format(Double.parseDouble(parse(string))));
         textArea.setText(parse(string));
-
     }
 
     private static String parse(String string) {
         Matcher matcher = quotingPriorOp.matcher(string);
 
-        String res = "";
         while (matcher.find()) {
-            res = matcher.replaceFirst(doMath(matcher.group()));
-            matcher.reset(res);
+            string = matcher.replaceFirst(doMath(matcher.group()));
+            matcher.reset(string);
         }
-        Matcher matcher1 = pattern.matcher(res);
+        Matcher matcher1 = pattern.matcher(string);
         while (matcher1.find()) {
-            res = matcher1.replaceFirst(doMath(matcher1.group()));
-            matcher1.reset(res);
+            string = matcher1.replaceFirst(doMath(matcher1.group()));
+            matcher1.reset(string);
         }
-        return res;
+        System.out.println("Hello " + string);
+        return string;
     }
 
     private static boolean includeAny(String string, String symbols) {
@@ -377,34 +386,36 @@ public class Window {
         int caretPos = textArea.getCaretPosition();
         String buttonText = jButton.getText();
 
-        if (caretPos == 0) {
-            textArea.insert(buttonText, caretPos);
-            return;
-        }
+        String charBeforeCaret = getCharRelativeToCaretPos(areaText, caretPos - 1);
+        String charAfterCaret = getCharRelativeToCaretPos(areaText, caretPos);
 
-        String lastChar = "", prevChar = "";
-        if (caretPos == areaText.length()) {
-            lastChar = getLastChar(areaText);
-        } else {
-            lastChar = Character.toString(areaText.charAt(caretPos));
-            prevChar = Character.toString(areaText.charAt(caretPos - 1));
-        }
-
-        if("+-/*".contains(prevChar) && ! prevChar.isEmpty()) {
+        if ("+-/*".contains(charBeforeCaret)) {
             textArea.select(caretPos - 1,caretPos);
             textArea.replaceSelection(buttonText);
             return;
         }
-        if ("+-/*".contains(lastChar) && ! lastChar.isEmpty()) {
-            textArea.select(caretPos,caretPos+1);
+
+        if("+-/*".contains(charAfterCaret)) {
+            textArea.select(caretPos,caretPos + 1);
             textArea.replaceSelection(buttonText);
             return;
         }
 
-        if (caretPos == areaText.length()) {
-            textArea.setText(areaText + buttonText);
-        } else {
-            textArea.insert(buttonText, caretPos);
+        textArea.insert(buttonText, caretPos);
+
+    }
+
+    /**
+     *
+     * @param string The haystack
+     * @param pos Where to search it
+     * @return the char found or None if not
+     */
+    private static String getCharRelativeToCaretPos(String string, int pos) {
+        try {
+            return Character.toString(string.charAt(pos));
+        } catch (IndexOutOfBoundsException exception) {
+            return "None";
         }
     }
 
